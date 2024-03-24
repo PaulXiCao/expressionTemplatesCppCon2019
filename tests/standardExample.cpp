@@ -43,7 +43,6 @@ class Vec {
   ~Vec() { std::cout << "~Vec\n"; }
 };
 
-/// @brief sum 'u' and 'v' into a new instance of Vec
 Vec operator+(Vec const &u, Vec const &v) {
   Vec sum;
   for (size_t i = 0; i < Vec::size; i++) {
@@ -62,7 +61,7 @@ int main() {
   std::cout << "\n`a = a + a`\n";
   a = a + a;
 
-  std:: cout << "\n`a = a + a + a`\n";
+  std::cout << "\n`a = a + a + a`\n";
   a = a + a + a;
 
   std::cout << "\n<return from main>\n";

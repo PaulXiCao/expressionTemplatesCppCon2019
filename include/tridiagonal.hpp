@@ -5,14 +5,15 @@
 
 #include "expressionTemplates.hpp"
 
+template <class T>
 class tridiagonal {
  private:
-  std::vector<double> v_;
+  std::vector<T> v_;
 
  public:
   explicit tridiagonal(std::size_t n) : v_(n) {}
 
-  tridiagonal(std::initializer_list<double> lst) : v_{lst} {}
+  tridiagonal(std::initializer_list<T> lst) : v_{lst} {}
 
   template <class src_type>
   tridiagonal& operator=(src_type const& src) {
@@ -21,19 +22,21 @@ class tridiagonal {
     return *this;
   }
 
-  double& operator[](index i) { return v_.at(i); }
-  double operator[](index i) const { return v_.at(i); }
+  T& operator[](index i) { return v_.at(i); }
+  T operator[](index i) const { return v_.at(i); }
 
-  friend std::ostream& operator<<(std::ostream& os, const tridiagonal& t);
+  template <class U>
+  friend std::ostream& operator<<(std::ostream& os, const tridiagonal<U>& t);
 };
 
-template <>
-constexpr bool is_binary_op_ok<tridiagonal, tridiagonal> = true;
+template <class T>
+constexpr bool is_binary_op_ok<tridiagonal<T>, tridiagonal<T>> = true;
 
-template <>
-struct is_array<tridiagonal> : public std::true_type {};
+template <class T>
+struct is_array<tridiagonal<T>> : public std::true_type {};
 
-std::ostream& operator<<(std::ostream& os, const tridiagonal& t) {
+template <class T>
+std::ostream& operator<<(std::ostream& os, const tridiagonal<T>& t) {
   if (t.v_.empty()) return os;
   auto it = t.v_.begin();
   while (true) {
